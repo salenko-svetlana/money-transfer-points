@@ -1,4 +1,6 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.entity;
+
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class Country {
     public Country() {
     }
 
-    Country(String code, String name, String description) {
+    public Country(String code, String name, String description) {
         this.code = code;
         this.name = name;
         this.description = description;

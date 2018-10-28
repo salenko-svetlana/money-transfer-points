@@ -1,4 +1,4 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.entity;
 
 import javax.persistence.*;
 

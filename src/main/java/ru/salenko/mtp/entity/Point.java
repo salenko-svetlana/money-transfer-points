@@ -1,4 +1,7 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.entity;
+
+import ru.salenko.mtp.entity.Bank;
+import ru.salenko.mtp.entity.City;
 
 import javax.persistence.*;
 

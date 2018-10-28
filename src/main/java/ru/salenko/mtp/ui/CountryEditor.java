@@ -1,4 +1,4 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.ui;
 
 
 import com.vaadin.flow.component.Key;
@@ -12,6 +12,8 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.salenko.mtp.entity.Country;
+import ru.salenko.mtp.repository.CountryRepository;
 
 @SpringComponent
 @UIScope
