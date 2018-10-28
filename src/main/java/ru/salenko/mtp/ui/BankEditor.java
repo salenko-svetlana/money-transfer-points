@@ -1,4 +1,4 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.ui;
 
 
 import com.vaadin.flow.component.Key;
@@ -12,19 +12,21 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.salenko.mtp.entity.Bank;
+import ru.salenko.mtp.repository.BankRepository;
 
 @SpringComponent
 @UIScope
-public class CountryEditor extends VerticalLayout implements KeyNotifier {
+public class BankEditor extends VerticalLayout implements KeyNotifier {
 
-	private final CountryRepository repository;
+	private final BankRepository repository;
 
 	/**
-	 * The currently edited customer
+	 * The currently edited bank
 	 */
-	private Country country;
+	private Bank bank;
 
-	/* Fields to edit properties in Customer entity */
+	/* Fields to edit properties in Bank entity */
 	private TextField code = new TextField("Code");
 	private TextField name = new TextField("Name");
 
@@ -34,11 +36,11 @@ public class CountryEditor extends VerticalLayout implements KeyNotifier {
 	private Button delete = new Button("Delete", VaadinIcon.TRASH.create());
 	private HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
 
-	private Binder<Country> binder = new Binder<>(Country.class);
+	private Binder<Bank> binder = new Binder<>(Bank.class);
 	private ChangeHandler changeHandler;
 
 	@Autowired
-	public CountryEditor(CountryRepository repository) {
+	public BankEditor(BankRepository repository) {
 		this.repository = repository;
 
 		add(code, name, actions);
@@ -57,17 +59,17 @@ public class CountryEditor extends VerticalLayout implements KeyNotifier {
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> save());
 		delete.addClickListener(e -> delete());
-		cancel.addClickListener(e -> editCountry(country));
+		cancel.addClickListener(e -> editBank(bank));
 		setVisible(false);
 	}
 
 	private void delete() {
-		repository.delete(country);
+		repository.delete(bank);
 		changeHandler.onChange();
 	}
 
 	private void save() {
-		repository.save(country);
+		repository.save(bank);
 		changeHandler.onChange();
 	}
 
@@ -75,25 +77,25 @@ public class CountryEditor extends VerticalLayout implements KeyNotifier {
 		void onChange();
 	}
 
-	final void editCountry(Country c) {
-		if (c == null) {
+	final void editBank(Bank editedBank) {
+		if (editedBank == null) {
 			setVisible(false);
 			return;
 		}
-		final boolean persisted = c.getId() != null;
+		final boolean persisted = editedBank.getId() != null;
 		if (persisted) {
 			// Find fresh entity for editing
-			country = repository.findById(c.getId()).orElse(null);
+			bank = repository.findById(editedBank.getId()).orElse(null);
 		}
 		else {
-			country = c;
+			bank = editedBank;
 		}
 		cancel.setVisible(persisted);
 
-		// Bind customer properties to similarly named fields
+		// Bind bank properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
 		// moving values from fields to entities before saving
-		binder.setBean(country);
+		binder.setBean(bank);
 
 		setVisible(true);
 

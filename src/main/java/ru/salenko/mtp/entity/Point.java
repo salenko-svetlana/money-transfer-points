@@ -1,8 +1,13 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.entity;
+
+import lombok.Getter;
+import ru.salenko.mtp.entity.Bank;
+import ru.salenko.mtp.entity.City;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class Point {
 
     @Id

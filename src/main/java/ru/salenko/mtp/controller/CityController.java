@@ -1,11 +1,10 @@
-package ru.salenko.mtp;
+package ru.salenko.mtp.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.salenko.mtp.entity.City;
+import ru.salenko.mtp.repository.CityRepository;
 
 @RestController
 @RequestMapping("/api/city")
