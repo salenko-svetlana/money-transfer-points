@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: salenko-svetlana
+      changes:
+        - sql:
+            sql: >
+              insert into country(id, code, name, description) values(1, 'RUS', 'Россия', 'Родина слонов'); 
+              insert into country(id, code, name, description) values(2, 'KAZ', 'Казахстан', 'Родина казахов'); 
+              COMMIT;
+  - changeSet:
+      id: 3
+      author: salenko-svetlana
+      changes:
+        - sql:
+            sql: >
+              insert into city(id, code, name, description, country) values(1, 'MO', 'Москва', 'Столица нашей Родины', 1); 
+              insert into city(id, code, name, description, country) values(2, 'NO', 'Новосибирск', 'Столица Сибири', 1); 
+              insert into city(id, code, name, description, country) values(3, 'SM', 'Семипалатинск', 'Крылатые ракетыыы летят, летят, летяяят', 1); 
+              COMMIT;
+  - changeSet:
+      id: 4
+      author: salenko-svetlana
+      changes:
+        - sql:
+            sql: >
+              insert into bank(id, code, name, description, city) values(1, 'SB', 'Сбербанк', 'Лучший Банк Мира', 1); 
+              COMMIT;
+  - changeSet:
+      id: 5
+      author: salenko-svetlana
+      changes:
+        - sql:
+            sql: >
+              insert into point(id, code, name, description, bank, city) values(1, 'P1', 'Красная площадь', 'Небольшой терминал', 1, 1); 
+              COMMIT;

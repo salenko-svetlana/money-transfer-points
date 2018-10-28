@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: salenko-svetlana
+      changes:
+        - sqlFile:
+            encoding: utf8
+            endDelimiter: ;
+            path: schema.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+  - include:
+      file: data.yaml
+      relativeToChangelogFile: true
