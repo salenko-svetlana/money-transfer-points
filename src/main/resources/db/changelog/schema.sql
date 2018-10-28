@@ -58,3 +58,5 @@ alter table point
 add constraint FK_city_bank
 foreign key (city)
 references city;
+
+create sequence hibernate_sequence START WITH 4;

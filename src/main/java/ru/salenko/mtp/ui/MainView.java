@@ -9,32 +9,26 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.springframework.util.StringUtils;
-import ru.salenko.mtp.entity.Country;
-import ru.salenko.mtp.repository.CountryRepository;
+import ru.salenko.mtp.entity.Bank;
+import ru.salenko.mtp.repository.BankRepository;
 
 @Route
 public class MainView extends VerticalLayout {
 
-	private final CountryRepository repo;
-
-	private final CountryEditor editor;
-
-	private final Grid<Country> grid;
+	private final BankRepository bankRepository;
+	private final Grid<Bank> grid;
 
 	private final TextField filter;
 
-	private final Button addNewBtn;
-
-	public MainView(CountryRepository repo, CountryEditor editor) {
-		this.repo = repo;
-		this.editor = editor;
-		this.grid = new Grid<>(Country.class);
+    public MainView(BankRepository bankRepository, BankEditor editor, BankViewer viewer) {
+		this.bankRepository = bankRepository;
+    	this.grid = new Grid<>(Bank.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New country", VaadinIcon.PLUS.create());
+        Button addNewBankButton = new Button("New bank", VaadinIcon.PLUS.create());
 
 		// build layout
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		add(actions, grid, editor);
+		HorizontalLayout actions = new HorizontalLayout(filter, addNewBankButton);
+		add(actions, grid, editor, viewer);
 
 		grid.setHeight("300px");
 		grid.setColumns("id", "code", "name");
@@ -46,30 +40,30 @@ public class MainView extends VerticalLayout {
 
 		// Replace listing with filtered content when user changes filter
 		filter.setValueChangeMode(ValueChangeMode.EAGER);
-		filter.addValueChangeListener(e -> listCountries(e.getValue()));
+		filter.addValueChangeListener(e -> listBank(e.getValue()));
 
-		// Connect selected Country to editor or hide if none is selected
-		grid.asSingleSelect().addValueChangeListener(e -> editor.editCountry(e.getValue()));
+		// Connect selected Bank to editor or hide if none is selected
+		grid.asSingleSelect().addValueChangeListener(e -> viewer.viewBank(e.getValue()));
 
-		// Instantiate and edit new Country the new button is clicked
-		addNewBtn.addClickListener(e -> editor.editCountry(new Country("", "","")));
+		// Instantiate and edit new Bank the new button is clicked
+		addNewBankButton.addClickListener(e -> editor.editBank(new Bank("", "")));
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			listCountries(filter.getValue());
+			listBank(filter.getValue());
 		});
 
 		// Initialize listing
-		listCountries(null);
+		listBank(null);
 	}
 
-	private void listCountries(String filterText) {
+	private void listBank(String filterText) {
 		if (StringUtils.isEmpty(filterText)) {
-			grid.setItems(repo.findAll());
+			grid.setItems(bankRepository.findAll());
 		}
 		else {
-			grid.setItems(repo.findByCodeStartsWithIgnoreCase(filterText));
+			grid.setItems(bankRepository.findByCodeStartsWithIgnoreCase(filterText));
 		}
 	}
 

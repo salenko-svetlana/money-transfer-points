@@ -1,8 +1,11 @@
 package ru.salenko.mtp.entity;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class City {
 
     @Id
