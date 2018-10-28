@@ -24,7 +24,7 @@ public class Country {
         this.description = description;
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
