@@ -1,3 +1,11 @@
+create table bank (
+  id NUMBER not null,
+  code varchar(255) not null,
+  name varchar(255) not null,
+  description varchar(255),
+  primary key (id)
+);
+
 create table country (
   id NUMBER not null,
   code varchar(255) not null,
@@ -15,14 +23,6 @@ create table city (
   primary key (id)
 );
 
-create table bank (
-  id NUMBER not null,
-  code varchar(255) not null,
-  name varchar(255) not null,
-  description varchar(255),
-  city NUMBER not null,
-  primary key (id)
-);
 
 create table point (
   id NUMBER not null,
@@ -49,11 +49,6 @@ add constraint FK_city_country
 foreign key (country)
 references country;
 
-alter table bank
-add constraint FK_bank_country
-foreign key (city)
-references city;
-
 alter table point
 add constraint FK_point_bank
 foreign key (bank)
@@ -63,6 +58,3 @@ alter table point
 add constraint FK_city_bank
 foreign key (city)
 references city;
-
-
-create sequence hibernate_sequence

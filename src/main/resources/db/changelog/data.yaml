@@ -24,7 +24,7 @@ databaseChangeLog:
       changes:
         - sql:
             sql: >
-              insert into bank(id, code, name, description, city) values(1, 'SB', 'Сбербанк', 'Лучший Банк Мира', 1); 
+              insert into bank(id, code, name, description) values(1, 'SB', 'Сбербанк', 'Лучший Банк Мира');
               COMMIT;
   - changeSet:
       id: 5

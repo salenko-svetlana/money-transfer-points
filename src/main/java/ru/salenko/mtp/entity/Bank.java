@@ -2,18 +2,26 @@ package ru.salenko.mtp.entity;
 
 import javax.persistence.*;
 
+/**
+ * Банк, являющийся владельцем пунктов выдачи/отправки переводов в указанном городе
+ */
 @Entity
 public class Bank {
-
     @Id
     @GeneratedValue
     public Long id;
 
+    /**
+     * Код банка
+     */
     public String code;
+    /**
+     * Название банка
+     */
     public String name;
-    public String description;
 
-    @ManyToOne(targetEntity = City.class)
-    @JoinColumn(name = "CITY", referencedColumnName = "ID")
-    public City city;
+    /**
+     * Описание банка
+     */
+    public String description;
 }
