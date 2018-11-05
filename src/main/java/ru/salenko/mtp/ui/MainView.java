@@ -49,7 +49,7 @@ public class MainView extends VerticalLayout {
 		grid.asSingleSelect().addValueChangeListener(e -> viewer.viewBank(e.getValue()));
 
 		// Instantiate and edit new Bank the new button is clicked
-		addNewBankButton.addClickListener(e -> editor.editBank(new Bank("", "")));
+		addNewBankButton.addClickListener(e -> editor.editBank());
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {

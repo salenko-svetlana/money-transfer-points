@@ -1,8 +1,12 @@
 package ru.salenko.mtp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
+@AllArgsConstructor
 public class BankItem {
     /**
      * Код банка
@@ -13,11 +17,6 @@ public class BankItem {
      * Название банка
      */
     private String name;
-
-    public BankItem(String code, String name){
-        this.code = code;
-        this.name = name;
-    }
 }
 
 

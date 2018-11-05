@@ -27,4 +27,12 @@ public class BankController {
     public Optional<BankItem> findByCode(String code) {
         return mtpService.findBankByCode(code);
     }
+
+    public void delete(String code) {
+        mtpService.deleteBank(code);
+    }
+
+    public void save(BankItem bank) {
+        mtpService.createBank(bank);
+    }
 }

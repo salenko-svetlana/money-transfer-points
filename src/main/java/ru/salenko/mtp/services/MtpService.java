@@ -63,4 +63,16 @@ public class MtpService {
                 .map(country -> new CountryItem(country.getCode(), country.getName())).collect(Collectors.toList());
 
     }
+
+    public void deleteBank(String code) {
+        Optional<Bank> bank = bankRepository.findBankByCode(code);
+        if (bank.isPresent()){
+            bankRepository.delete(bank.get());
+        }
+    }
+
+    public void createBank(BankItem bank) {
+        Bank newBank = new Bank(bank.getCode(), bank.getName());
+        bankRepository.save(newBank);
+    }
 }
