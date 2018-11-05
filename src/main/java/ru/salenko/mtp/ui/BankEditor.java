@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.salenko.mtp.controller.BankController;
 import ru.salenko.mtp.dto.BankItem;
 
+/**
+ * Форма для создания нового банка.
+ */
 @SpringComponent
 @UIScope
 public class BankEditor extends VerticalLayout implements KeyNotifier {

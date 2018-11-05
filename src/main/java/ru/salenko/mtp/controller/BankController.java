@@ -9,6 +9,9 @@ import ru.salenko.mtp.services.MtpService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Контроллер для выполнения операций с банками
+ */
 @RestController
 @RequestMapping("/api/bank")
 public class BankController {
@@ -24,6 +27,7 @@ public class BankController {
         return mtpService.getBanks();
     }
 
+    @GetMapping("/findByCode")
     public Optional<BankItem> findByCode(String code) {
         return mtpService.findBankByCode(code);
     }

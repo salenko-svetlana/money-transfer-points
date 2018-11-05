@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Информация о банке
+ */
 @Getter
 @Setter
 @AllArgsConstructor

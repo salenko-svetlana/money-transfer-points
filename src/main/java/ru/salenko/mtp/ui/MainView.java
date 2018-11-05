@@ -11,10 +11,15 @@ import com.vaadin.flow.router.Route;
 import org.springframework.util.StringUtils;
 import ru.salenko.mtp.controller.BankController;
 import ru.salenko.mtp.dto.BankItem;
-import ru.salenko.mtp.entity.Bank;
 
 import java.util.stream.Collectors;
 
+/**
+ * Основное окно(форма) приложения.
+ * Отображается при запуске.
+ * Содержит перечень банков, заведенных в системе с возможностью выбора банка для просмотра и
+ * создания нового банка.
+ */
 @Route
 public class MainView extends VerticalLayout {
 

@@ -1,5 +1,6 @@
 package ru.salenko.mtp.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.salenko.mtp.dto.CityItem;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Контроллер для выполнения операций с городами
+ */
 @RestController
 @RequestMapping("/api/city")
 public class CityController {
@@ -18,6 +22,7 @@ public class CityController {
         this.mtpService = mtpService;
     }
 
+    @GetMapping("/byPoints")
     public List<CityItem> getCitiesByPoints(List<PointItem> points) {
         return mtpService.getCitiesByCodes(points.stream().map(PointItem::getCityCode).collect(Collectors.toSet()));
     }

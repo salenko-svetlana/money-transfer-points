@@ -22,6 +22,10 @@ import ru.salenko.mtp.dto.PointItem;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Просмотровщик подробной информации по банку с возможностью
+ * просмотра перечня точек в разрезе страны/города
+ */
 @SpringComponent
 @UIScope
 public class BankViewer extends VerticalLayout implements KeyNotifier {

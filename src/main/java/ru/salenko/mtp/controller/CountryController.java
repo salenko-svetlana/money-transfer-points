@@ -1,5 +1,6 @@
 package ru.salenko.mtp.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.salenko.mtp.dto.CityItem;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Контроллер для выполнения операций со странами
+ */
 @RestController
 @RequestMapping("/api/country")
 public class CountryController {
@@ -18,6 +22,7 @@ public class CountryController {
         this.mtpService = mtpService;
     }
 
+    @GetMapping("/byCities")
     public List<CountryItem> getCountriesByCities(List<CityItem> cities) {
         return mtpService.getCountriesByCodes(cities.stream().map(CityItem::getCountryCode).collect(Collectors.toSet()));
     }
