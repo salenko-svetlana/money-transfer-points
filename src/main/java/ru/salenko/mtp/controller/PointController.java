@@ -1,8 +1,6 @@
 package ru.salenko.mtp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.salenko.mtp.dto.PointItem;
 import ru.salenko.mtp.services.MtpService;
 
@@ -15,8 +13,8 @@ public class PointController {
     private final MtpService mtpService;
     public PointController(MtpService mtpService) { this.mtpService = mtpService; }
 
-    @GetMapping("/findAllByBank")
-    public List<PointItem> findAllByBank(String bankCode) {
+    @RequestMapping(value = "/findAllByBank", method = RequestMethod.POST)
+    public List<PointItem> findAllByBank(@RequestBody String bankCode) {
        return mtpService.findPointsByBankCode(bankCode);
     }
 }

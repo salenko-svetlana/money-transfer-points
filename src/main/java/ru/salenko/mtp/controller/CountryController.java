@@ -1,14 +1,14 @@
 package ru.salenko.mtp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.salenko.mtp.dto.CityItem;
 import ru.salenko.mtp.dto.CountryItem;
 import ru.salenko.mtp.services.MtpService;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,8 +22,8 @@ public class CountryController {
         this.mtpService = mtpService;
     }
 
-    @GetMapping("/byCities")
-    public List<CountryItem> getCountriesByCities(List<CityItem> cities) {
+    @RequestMapping(value = "/byCities", method = RequestMethod.POST)
+    public List<CountryItem> getCountriesByCities(@RequestBody List<CityItem> cities) {
         return mtpService.getCountriesByCodes(cities.stream().map(CityItem::getCountryCode).collect(Collectors.toSet()));
     }
 }

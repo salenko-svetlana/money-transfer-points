@@ -12,7 +12,6 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.salenko.mtp.controller.BankController;
 import ru.salenko.mtp.dto.BankItem;
 
 /**
@@ -22,7 +21,7 @@ import ru.salenko.mtp.dto.BankItem;
 @UIScope
 public class BankEditor extends VerticalLayout implements KeyNotifier {
 
-	private final BankController bankController;
+	private final ApiCaller apiCaller;
 	/**
 	 * The currently edited bank
 	 */
@@ -36,8 +35,8 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 	private ChangeHandler changeHandler;
 
 	@Autowired
-	public BankEditor(BankController bankController) {
-		this.bankController = bankController;
+	public BankEditor(ApiCaller apiCaller) {
+		this.apiCaller = apiCaller;
 
 		/* Action buttons */
 		Button save = new Button("Save", VaadinIcon.CHECK.create());
@@ -66,7 +65,7 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 	}
 
 	private void save() {
-		bankController.save(bank);
+		apiCaller.save(bank);
 		changeHandler.onChange();
 	}
 

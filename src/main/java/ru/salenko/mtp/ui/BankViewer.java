@@ -10,16 +10,15 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.salenko.mtp.controller.BankController;
-import ru.salenko.mtp.controller.CityController;
-import ru.salenko.mtp.controller.CountryController;
-import ru.salenko.mtp.controller.PointController;
 import ru.salenko.mtp.dto.BankItem;
 import ru.salenko.mtp.dto.CityItem;
 import ru.salenko.mtp.dto.CountryItem;
 import ru.salenko.mtp.dto.PointItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -29,11 +28,7 @@ import java.util.stream.Collectors;
 @SpringComponent
 @UIScope
 public class BankViewer extends VerticalLayout implements KeyNotifier {
-
-	private final BankController bankController;
-	private final PointController pointController;
-	private final CityController cityController;
-	private final CountryController countryController;
+    private final ApiCaller apiCaller;
 
     private List<PointItem> points = new ArrayList<>();
     private List<CityItem> cities = new ArrayList<>();
@@ -45,11 +40,8 @@ public class BankViewer extends VerticalLayout implements KeyNotifier {
     private Grid<PointItem> pointsGrid;
 
     @Autowired
-    public BankViewer(BankController bankController, PointController pointController, CityController cityController, CountryController countryController) {
-		this.bankController = bankController;
-        this.pointController = pointController;
-        this.cityController = cityController;
-        this.countryController = countryController;
+    public BankViewer(ApiCaller apiCaller) {
+        this.apiCaller = apiCaller;
 
         bankInfo.setReadOnly(true);
         bankInfo.setWidth("50%");
@@ -114,11 +106,11 @@ public class BankViewer extends VerticalLayout implements KeyNotifier {
             return;
         }
     	// Find fresh entity for editing
-		BankItem bank = bankController.findByCode(editedBank.getCode())
+		BankItem bank = apiCaller.findBankByCode(editedBank.getCode())
                 .orElseThrow(() -> new RuntimeException("Неизвестная ошибка приложения"));
         bankInfo.setValue("КОД: " + bank.getCode() + " ;Название: " + bank.getName());
 
-        points = pointController.findAllByBank(bank.getCode());
+        points = apiCaller.findAllPointsByBank(bank.getCode());
         if (points.isEmpty()) {
             pointsGrid.setItems(Collections.emptyList());
             cities = Collections.emptyList();
@@ -126,10 +118,10 @@ public class BankViewer extends VerticalLayout implements KeyNotifier {
             countriesCombo.setItems(Collections.emptyList());
         } else {
             pointsGrid.setItems(points);
-            cities = cityController.getCitiesByPoints(points);
+            cities = apiCaller.getCitiesByPoints(points);
             citiesCombo.setItems(cities);
 
-            List<CountryItem> countries = countryController.getCountriesByCities(cities);
+            List<CountryItem> countries = apiCaller.getCountriesByCities(cities);
             countriesCombo.setItems(countries);
         }
 

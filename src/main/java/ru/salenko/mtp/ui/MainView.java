@@ -9,7 +9,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.springframework.util.StringUtils;
-import ru.salenko.mtp.controller.BankController;
 import ru.salenko.mtp.dto.BankItem;
 
 import java.util.stream.Collectors;
@@ -22,14 +21,12 @@ import java.util.stream.Collectors;
  */
 @Route
 public class MainView extends VerticalLayout {
-
-	private final BankController bankController;
 	private final Grid<BankItem> grid;
-
 	private final TextField filter;
+	private final ApiCaller apiCaller;
 
-    public MainView(BankController bankController, BankEditor editor, BankViewer viewer) {
-		this.bankController = bankController;
+    public MainView(BankEditor editor, BankViewer viewer, ApiCaller apiCaller) {
+        this.apiCaller = apiCaller;
     	this.grid = new Grid<>(BankItem.class);
 		this.filter = new TextField();
         Button addNewBankButton = new Button("New bank", VaadinIcon.PLUS.create());
@@ -68,10 +65,10 @@ public class MainView extends VerticalLayout {
 
 	private void listBank(String filterText) {
 		if (StringUtils.isEmpty(filterText)) {
-			grid.setItems(bankController.getBankItems());
+			grid.setItems(apiCaller.getBankItems());
 		}
 		else {
-			grid.setItems(bankController.getBankItems().stream()
+			grid.setItems(apiCaller.getBankItems().stream()
                     .filter(bankItem -> bankItem.getCode().startsWith(filterText.toUpperCase())).collect(Collectors.toList()));
 		}
 	}
