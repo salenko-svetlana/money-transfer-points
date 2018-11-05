@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Bank {
     @Id
     @GeneratedValue
-    public Long id;
+    private Long id;
 
     public Bank(String code, String name) {
         this.code = code;
@@ -27,15 +27,15 @@ public class Bank {
     /**
      * Код банка
      */
-    public String code;
+    private String code;
 
     /**
      * Название банка
      */
-    public String name;
+    private String name;
 
     /**
      * Описание банка
      */
-    public String description;
+    private String description;
 }
