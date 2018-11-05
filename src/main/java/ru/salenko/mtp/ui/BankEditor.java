@@ -38,9 +38,8 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 
 		/* Action buttons */
 		Button save = new Button("Save", VaadinIcon.CHECK.create());
-		Button delete = new Button("Delete", VaadinIcon.TRASH.create());
 		Button cancel = new Button("Cancel");
-		HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
+		HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		add(code, name, actions);
 
 		// bind using naming convention
@@ -50,23 +49,16 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 		setSpacing(true);
 
 		save.getElement().getThemeList().add("primary");
-		delete.getElement().getThemeList().add("error");
 
 		addKeyPressListener(Key.ENTER, e -> save());
 
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> save());
-		delete.addClickListener(e -> delete());
 		cancel.addClickListener(e -> cancel());
 		setVisible(false);
 	}
 
 	private void cancel() {
-		changeHandler.onChange();
-	}
-
-	private void delete() {
-		bankController.delete(bank.getCode());
 		changeHandler.onChange();
 	}
 
