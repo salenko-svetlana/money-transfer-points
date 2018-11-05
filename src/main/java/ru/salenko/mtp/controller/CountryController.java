@@ -2,11 +2,13 @@ package ru.salenko.mtp.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.salenko.mtp.dto.CityItem;
 import ru.salenko.mtp.dto.CountryItem;
 import ru.salenko.mtp.services.MtpService;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/country")
@@ -16,7 +18,7 @@ public class CountryController {
         this.mtpService = mtpService;
     }
 
-    public List<CountryItem> getCountriesByCodes(Set<String> codes) {
-        return mtpService.getCountriesByCodes(codes);
+    public List<CountryItem> getCountriesByCities(List<CityItem> cities) {
+        return mtpService.getCountriesByCodes(cities.stream().map(CityItem::getCountryCode).collect(Collectors.toSet()));
     }
 }

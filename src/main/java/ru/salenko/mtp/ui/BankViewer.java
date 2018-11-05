@@ -122,10 +122,10 @@ public class BankViewer extends VerticalLayout implements KeyNotifier {
             countriesCombo.setItems(Collections.emptyList());
         } else {
             pointsGrid.setItems(points);
-            cities = cityController.getCitiesByCodes(points.stream().map(PointItem::getCityCode).collect(Collectors.toSet()));
+            cities = cityController.getCitiesByPoints(points);
             citiesCombo.setItems(cities);
 
-            List<CountryItem> countries = countryController.getCountriesByCodes(cities.stream().map(CityItem::getCountryCode).collect(Collectors.toSet()));
+            List<CountryItem> countries = countryController.getCountriesByCities(cities);
             countriesCombo.setItems(countries);
         }
 
