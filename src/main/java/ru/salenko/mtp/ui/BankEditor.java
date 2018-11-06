@@ -12,37 +12,36 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.salenko.mtp.entity.Bank;
-import ru.salenko.mtp.repository.BankRepository;
+import ru.salenko.mtp.dto.BankItem;
 
+/**
+ * Форма для создания нового банка.
+ */
 @SpringComponent
 @UIScope
 public class BankEditor extends VerticalLayout implements KeyNotifier {
 
-	private final BankRepository repository;
-
+	private final ApiCaller apiCaller;
 	/**
 	 * The currently edited bank
 	 */
-	private Bank bank;
+	private BankItem bank;
 
 	/* Fields to edit properties in Bank entity */
 	private TextField code = new TextField("Code");
 	private TextField name = new TextField("Name");
 
-	/* Action buttons */
-	private Button save = new Button("Save", VaadinIcon.CHECK.create());
-	private Button cancel = new Button("Cancel");
-	private Button delete = new Button("Delete", VaadinIcon.TRASH.create());
-	private HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
-
-	private Binder<Bank> binder = new Binder<>(Bank.class);
+	private Binder<BankItem> binder = new Binder<>(BankItem.class);
 	private ChangeHandler changeHandler;
 
 	@Autowired
-	public BankEditor(BankRepository repository) {
-		this.repository = repository;
+	public BankEditor(ApiCaller apiCaller) {
+		this.apiCaller = apiCaller;
 
+		/* Action buttons */
+		Button save = new Button("Save", VaadinIcon.CHECK.create());
+		Button cancel = new Button("Cancel");
+		HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		add(code, name, actions);
 
 		// bind using naming convention
@@ -52,24 +51,21 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 		setSpacing(true);
 
 		save.getElement().getThemeList().add("primary");
-		delete.getElement().getThemeList().add("error");
 
 		addKeyPressListener(Key.ENTER, e -> save());
 
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> save());
-		delete.addClickListener(e -> delete());
-		cancel.addClickListener(e -> editBank(bank));
+		cancel.addClickListener(e -> cancel());
 		setVisible(false);
 	}
 
-	private void delete() {
-		repository.delete(bank);
+	private void cancel() {
 		changeHandler.onChange();
 	}
 
 	private void save() {
-		repository.save(bank);
+		apiCaller.save(bank);
 		changeHandler.onChange();
 	}
 
@@ -77,20 +73,8 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 		void onChange();
 	}
 
-	final void editBank(Bank editedBank) {
-		if (editedBank == null) {
-			setVisible(false);
-			return;
-		}
-		final boolean persisted = editedBank.getId() != null;
-		if (persisted) {
-			// Find fresh entity for editing
-			bank = repository.findById(editedBank.getId()).orElse(null);
-		}
-		else {
-			bank = editedBank;
-		}
-		cancel.setVisible(persisted);
+	final void editBank() {
+		bank = new BankItem(null, null);
 
 		// Bind bank properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically

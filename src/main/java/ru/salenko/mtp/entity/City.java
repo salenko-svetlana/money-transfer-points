@@ -7,14 +7,13 @@ import javax.persistence.*;
 @Entity
 @Getter
 public class City {
-
     @Id
     @GeneratedValue
-    public Long id;
+    private Long id;
 
-    public String code;
-    public String name;
-    public String description;
+    private String code;
+    private String name;
+    private String description;
 
     @ManyToOne(targetEntity = Country.class)
     @JoinColumn(name = "COUNTRY", referencedColumnName = "ID")

@@ -43,5 +43,4 @@ databaseChangeLog:
               insert into point(id, code, name, description, bank, city) values(7, 'P7', 'ВТБ1', 'Небольшой терминал', 3, 3);
               insert into point(id, code, name, description, bank, city) values(8, 'P8', 'ВТБ2', 'Т2', 3, 3);
               insert into point(id, code, name, description, bank, city) values(9, 'P9', 'ВТБ3', 'Т3', 3, 3);
-
               COMMIT;
