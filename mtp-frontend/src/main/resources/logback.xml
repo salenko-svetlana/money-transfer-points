@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.springframework.web" level="INFO"/>
+
+    <property name="FILE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] --- %-40.40logger{39} : %m%n%ex"/>
+
+    <property name="LOGS_DIR" value="${logs.path:-logs}"/>
+
+    <appender name="MTP_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_DIR}/mtp-frontend-${HOSTNAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/backup/mtp-frontend-${HOSTNAME}-%d.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="MTP_LOG_FILE"/>
+    </root>
+
+    <logger name="ru" level="INFO"/>
+    <logger name="ru.salenko" level="DEBUG"/>
+    <logger name="org.springframework.web.client" level="INFO"/>
+
+</configuration>

@@ -1,0 +1,7 @@
+server:
+    port: 9009
+    address: localhost
+
+spring:
+    application:
+        name: MoneyTransferPoints-Frontend
