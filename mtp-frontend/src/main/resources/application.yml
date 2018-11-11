@@ -4,4 +4,7 @@ server:
 
 spring:
     application:
-        name: MoneyTransferPoints-Frontend
+        name: MTPFrontend
+
+MTPFrontend.backend-host: localhost
+MTPFrontend.backend-port: 9019

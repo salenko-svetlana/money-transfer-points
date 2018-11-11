@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ApiCaller {
+class ApiCaller {
     private final RestTemplate restTemplate;
     private final String url;
     private static final String PROTOCOL = "http";
 
     @Autowired
-    ApiCaller(@Value("${server.address}") String host,
-              @Value("${server.port}") Integer port) {
+    ApiCaller(@Value("${MTPFrontend.backend-host}") String host,
+              @Value("${MTPFrontend.backend-port}") Integer port) {
         this.url = host + ":" + port;
         this.restTemplate = new RestTemplate();
     }

@@ -1,0 +1,1 @@
+java -jar -Dspring.profiles.active=test mtp-backend\target\mtp-backend-0.1.0-SNAPSHOT.jar

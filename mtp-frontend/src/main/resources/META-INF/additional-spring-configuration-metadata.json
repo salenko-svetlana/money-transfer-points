@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "MTPFrontend.backend-host",
+      "type": "java.lang.String",
+      "description": "Хост, на котором запущен бэкенд."
+    },
+    {
+      "name": "MTPFrontend.backend-port",
+      "type": "java.lang.String",
+      "description": "Порт, на котором запущен бэкенд."
+    }
+  ] }

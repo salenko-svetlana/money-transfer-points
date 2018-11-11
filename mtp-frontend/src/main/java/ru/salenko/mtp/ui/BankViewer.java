@@ -60,22 +60,7 @@ class BankViewer extends VerticalLayout implements KeyNotifier {
         countriesCombo.setItemLabelGenerator(CountryItem::getName);
 
 
-        countriesCombo.addValueChangeListener(event -> {
-            CountryItem country = countriesCombo.getValue();
-            if (country != null) {
-                Set<CityItem> filteredCities =
-                        cities.stream().filter(city -> city.getCountryCode().equals(country.getCode()))
-                                .collect(Collectors.toSet());
-                citiesCombo.setItems(filteredCities);
-                List<PointItem> filteredPoints =
-                        points.stream().filter(point -> filteredCities.stream()
-                                .anyMatch(fc -> fc.getCode().equals(point.getCityCode()))).collect(Collectors.toList());
-                pointsGrid.setItems(filteredPoints);
-            } else {
-                citiesCombo.setItems(cities);
-                pointsGrid.setItems(points);
-            }
-        });
+        countriesCombo.addValueChangeListener(event -> filterByCountry());
 
         citiesCombo.setPlaceholder("Город не выбран");
         citiesCombo.setWidth("50%");
@@ -88,20 +73,7 @@ class BankViewer extends VerticalLayout implements KeyNotifier {
                                 .collect(Collectors.toList());
                 pointsGrid.setItems(filteredPoints);
             } else {
-                CountryItem country = countriesCombo.getValue();
-                if (country != null) {
-                    Set<CityItem> filteredCities =
-                            cities.stream().filter(cityx -> cityx.getCountryCode().equals(country.getCode()))
-                                    .collect(Collectors.toSet());
-                    citiesCombo.setItems(filteredCities);
-                    List<PointItem> filteredPoints =
-                            points.stream().filter(point -> filteredCities.stream()
-                                    .anyMatch(fc -> fc.getCode().equals(point.getCityCode()))).collect(Collectors.toList());
-                    pointsGrid.setItems(filteredPoints);
-                } else {
-                    citiesCombo.setItems(cities);
-                    pointsGrid.setItems(points);
-                }
+                filterByCountry();
 
             }
         });
@@ -122,6 +94,24 @@ class BankViewer extends VerticalLayout implements KeyNotifier {
         // wire action buttons to save, delete and reset
         cancel.addClickListener(e -> viewBank(null));
         setVisible(false);
+    }
+
+    private
+    void filterByCountry() {
+        CountryItem country = countriesCombo.getValue();
+        if (country != null) {
+            Set<CityItem> filteredCities =
+                    cities.stream().filter(city -> city.getCountryCode().equals(country.getCode()))
+                            .collect(Collectors.toSet());
+            citiesCombo.setItems(filteredCities);
+            List<PointItem> filteredPoints =
+                    points.stream().filter(point -> filteredCities.stream()
+                            .anyMatch(fc -> fc.getCode().equals(point.getCityCode()))).collect(Collectors.toList());
+            pointsGrid.setItems(filteredPoints);
+        } else {
+            citiesCombo.setItems(cities);
+            pointsGrid.setItems(points);
+        }
     }
 
     final
