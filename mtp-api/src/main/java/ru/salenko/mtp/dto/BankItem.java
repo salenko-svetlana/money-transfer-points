@@ -1,9 +1,6 @@
 package ru.salenko.mtp.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Информация о банке
@@ -22,6 +19,14 @@ public class BankItem {
      * Название банка
      */
     private String name;
+
+    @Override
+    public String toString() {
+        return "BankItem{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
 
 

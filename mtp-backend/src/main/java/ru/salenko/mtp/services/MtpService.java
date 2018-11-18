@@ -1,5 +1,7 @@
 package ru.salenko.mtp.services;
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.salenko.mtp.dto.BankItem;
 import ru.salenko.mtp.dto.CityItem;
@@ -23,16 +25,15 @@ import java.util.stream.Collectors;
  * Использует слой хранения данных.
  */
 @Service
-public
-class MtpService {
-
+@Log4j2
+public class MtpService {
     private final BankRepository bankRepository;
     private final PointRepository pointRepository;
     private final CityRepository cityRepository;
     private final CountryRepository countryRepository;
 
-    public
-    MtpService(BankRepository bankRepository, PointRepository pointRepository, CityRepository cityRepository,
+    @Autowired
+    public MtpService(BankRepository bankRepository,  PointRepository pointRepository, CityRepository cityRepository,
                CountryRepository countryRepository) {
         this.bankRepository = bankRepository;
         this.pointRepository = pointRepository;
@@ -42,6 +43,7 @@ class MtpService {
 
     public
     List<BankItem> getBanks() {
+        log.debug("Получен запрос на получение списка банков");
         return bankRepository.findAll().stream()
                 .map(bank -> new BankItem(bank.getCode(), bank.getName())).collect(Collectors.toList());
     }
