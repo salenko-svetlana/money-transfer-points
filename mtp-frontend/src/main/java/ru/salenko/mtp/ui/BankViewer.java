@@ -47,8 +47,7 @@ class BankViewer extends VerticalLayout implements KeyNotifier {
     private Grid<PointItem> pointsGrid;
 
     @Autowired
-    public
-    BankViewer(ApiCaller apiCaller) {
+    public BankViewer(ApiCaller apiCaller) {
         this.apiCaller = apiCaller;
 
         bankInfo.setReadOnly(true);
@@ -56,9 +55,7 @@ class BankViewer extends VerticalLayout implements KeyNotifier {
 
         countriesCombo.setPlaceholder("Страна не выбрана");
         countriesCombo.setWidth("50%");
-        // Sets the combobox to show a certain property as the item caption
         countriesCombo.setItemLabelGenerator(CountryItem::getName);
-
 
         countriesCombo.addValueChangeListener(event -> filterByCountry());
 
@@ -83,15 +80,12 @@ class BankViewer extends VerticalLayout implements KeyNotifier {
         pointsGrid.setColumns("code", "name");
         pointsGrid.getColumnByKey("code").setWidth("50px").setFlexGrow(0);
 
-        /* Action buttons */
         Button cancel = new Button("Cancel");
         HorizontalLayout actions = new HorizontalLayout(cancel);
         add(bankInfo, countriesCombo, citiesCombo, pointsGrid, actions);
 
-        // Configure and style components
         setSpacing(true);
 
-        // wire action buttons to save, delete and reset
         cancel.addClickListener(e -> viewBank(null));
         setVisible(false);
     }
