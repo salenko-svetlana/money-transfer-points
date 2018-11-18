@@ -22,12 +22,8 @@ import ru.salenko.mtp.dto.BankItem;
 public class BankEditor extends VerticalLayout implements KeyNotifier {
 
 	private final transient ApiCaller apiCaller;
-	/**
-	 * The currently edited bank
-	 */
 	private transient BankItem bank;
 
-	/* Fields to edit properties in Bank entity */
 	private TextField code = new TextField("Code");
 	private TextField name = new TextField("Name");
 
@@ -38,23 +34,19 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 	public BankEditor(ApiCaller apiCaller) {
 		this.apiCaller = apiCaller;
 
-		/* Action buttons */
 		Button save = new Button("Save", VaadinIcon.CHECK.create());
 		Button cancel = new Button("Cancel");
 		HorizontalLayout actions = new HorizontalLayout(save, cancel);
 		add(code, name, actions);
 
-		// bind using naming convention
 		binder.bindInstanceFields(this);
 
-		// Configure and style components
 		setSpacing(true);
 
 		save.getElement().getThemeList().add("primary");
 
 		addKeyPressListener(Key.ENTER, e -> save());
 
-		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> save());
 		cancel.addClickListener(e -> cancel());
 		setVisible(false);
@@ -75,21 +67,12 @@ public class BankEditor extends VerticalLayout implements KeyNotifier {
 
 	final void editBank() {
 		bank = new BankItem(null, null);
-
-		// Bind bank properties to similarly named fields
-		// Could also use annotation or "manual binding" or programmatically
-		// moving values from fields to entities before saving
 		binder.setBean(bank);
-
 		setVisible(true);
-
-		// Focus first name initially
 		code.focus();
 	}
 
 	void setChangeHandler(ChangeHandler h) {
-		// ChangeHandler is notified when either save or delete
-		// is clicked
 		changeHandler = h;
 	}
 

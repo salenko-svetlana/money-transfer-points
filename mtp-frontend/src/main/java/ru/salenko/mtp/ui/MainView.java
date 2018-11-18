@@ -33,7 +33,6 @@ class MainView extends VerticalLayout {
         this.filter = new TextField();
         Button addNewBankButton = new Button("New bank", VaadinIcon.PLUS.create());
 
-        // build layout
         HorizontalLayout actions = new HorizontalLayout(filter, addNewBankButton);
         add(actions, grid, editor, viewer);
 
@@ -43,25 +42,16 @@ class MainView extends VerticalLayout {
 
         filter.setPlaceholder("Filter by name");
 
-        // Hook logic to components
-
-        // Replace listing with filtered content when user changes filter
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> listBank(e.getValue()));
 
-        // Connect selected Bank to editor or hide if none is selected
         grid.asSingleSelect().addValueChangeListener(e -> viewer.viewBank(e.getValue()));
-
-        // Instantiate and edit new Bank the new button is clicked
         addNewBankButton.addClickListener(e -> editor.editBank());
-
-        // Listen changes made by the editor, refresh data from backend
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
             listBank(filter.getValue());
         });
 
-        // Initialize listing
         listBank(null);
     }
 
